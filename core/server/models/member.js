@@ -201,6 +201,7 @@ const Member = ghostBookshelf.Model.extend({
         queryBuilder.orWhere('members.email', 'like', `%${query}%`);
     },
 
+<<<<<<< HEAD
     // TODO: hacky way to filter by members with an active subscription,
     // replace with a proper way to do this via filter param.
     // NOTE: assumes members will have a single subscription
@@ -235,6 +236,8 @@ const Member = ghostBookshelf.Model.extend({
         }
     },
 
+=======
+>>>>>>> parent of 654f1b9... Add v3.20.0
     toJSON(unfilteredOptions) {
         const options = Member.filterOptions(unfilteredOptions, 'toJSON');
         const attrs = ghostBookshelf.Model.prototype.toJSON.call(this, options);
@@ -260,8 +263,7 @@ const Member = ghostBookshelf.Model.extend({
         let options = ghostBookshelf.Model.permittedOptions.call(this, methodName);
 
         if (['findPage', 'findAll'].includes(methodName)) {
-            // TODO: remove 'paid' once it's possible to use in a filter
-            options = options.concat(['search', 'paid']);
+            options = options.concat(['search']);
         }
 
         return options;

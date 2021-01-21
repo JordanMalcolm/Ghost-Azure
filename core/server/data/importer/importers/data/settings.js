@@ -142,11 +142,14 @@ class SettingsImporter extends BaseImporter {
                 obj.value = JSON.stringify([{url: ''}]);
             }
 
+<<<<<<< HEAD
             // CASE: we do not import "from address" for members settings as that needs to go via validation with magic link
             if ((obj.key === 'members_from_address') || (obj.key === 'members_support_address')) {
                 obj.value = null;
             }
 
+=======
+>>>>>>> parent of 654f1b9... Add v3.20.0
             // CASE: export files might contain "0" or "1" for booleans. Model layer needs real booleans.
             // transform "0" to false
             if (obj.value === '0' || obj.value === '1') {

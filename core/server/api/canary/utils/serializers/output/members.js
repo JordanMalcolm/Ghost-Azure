@@ -11,11 +11,20 @@ module.exports = {
     add: createSerializer('add', singleMember),
     editSubscription: createSerializer('editSubscription', singleMember),
 
+<<<<<<< HEAD
     exportCSV: createSerializer('exportCSV', exportCSV),
 
     importCSV: createSerializer('importCSV', passthrough),
     stats: createSerializer('stats', passthrough)
 };
+=======
+    exportCSV(models, apiConfig, frame) {
+        debug('exportCSV');
+
+        const members = models.members.map((member) => {
+            member = mapper.mapMember(member, frame);
+            let stripeCustomerId;
+>>>>>>> parent of 654f1b9... Add v3.20.0
 
 /**
  * @template PageMeta

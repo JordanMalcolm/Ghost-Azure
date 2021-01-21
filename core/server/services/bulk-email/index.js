@@ -243,8 +243,34 @@ module.exports = {
             sentry.captureException(ghostError);
             logging.warn(ghostError);
 
+<<<<<<< HEAD
             debug(`failed to send message (${Date.now() - startTime}ms)`);
             throw ghostError;
+=======
+            const messageData = Object.assign({}, message, batchData);
+
+            return new Promise((resolve) => {
+                mailgunInstance.messages().send(messageData, (error, body) => {
+                    if (error) {
+                        // NOTE: logging an error here only but actual handling should happen in more sophisticated batch retry handler
+                        // REF: possible mailgun errors https://documentation.mailgun.com/en/latest/api-intro.html#errors
+                        let ghostError = new errors.EmailError({
+                            err: error,
+                            context: i18n.t('errors.services.mega.requestFailed.error')
+                        });
+
+                        sentry.captureException(ghostError);
+                        logging.warn(ghostError);
+
+                        // NOTE: these are generated variables, so can be regenerated when retry is done
+                        const data = _.omit(batchData, ['recipient-variables']);
+                        resolve(new FailedBatch(error, data));
+                    } else {
+                        resolve(new SuccessfulBatch(body));
+                    }
+                });
+            });
+>>>>>>> parent of 654f1b9... Add v3.20.0
         });
     }
 };

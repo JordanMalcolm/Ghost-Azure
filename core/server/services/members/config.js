@@ -64,8 +64,7 @@ class MembersConfigProvider {
             AUD: '$',
             CAD: '$',
             GBP: '£',
-            EUR: '€',
-            INR: '₹'
+            EUR: '€'
         };
 
         const defaultPriceData = {
@@ -137,12 +136,21 @@ class MembersConfigProvider {
             return this.getStripeKeys('direct');
         }
 
+<<<<<<< HEAD
         return connectKeys;
     }
 
     isStripeConnected() {
         return this.getActiveStripeKeys() !== null;
     }
+=======
+        if (!stripePaymentProcessor.config.public_token || !stripePaymentProcessor.config.secret_token) {
+            return null;
+        }
+
+        // NOTE: "Complimentary" plan has to be first in the queue so it is created even if regular plans are not configured
+        stripePaymentProcessor.config.plans.unshift(COMPLIMENTARY_PLAN);
+>>>>>>> parent of 654f1b9... Add v3.20.0
 
     getStripeUrlConfig() {
         const siteUrl = this._urlUtils.getSiteUrl();
@@ -176,10 +184,13 @@ class MembersConfigProvider {
         const stripeApiKeys = this.getActiveStripeKeys();
         const urls = this.getStripeUrlConfig();
 
+<<<<<<< HEAD
         if (!stripeApiKeys) {
             return null;
         }
 
+=======
+>>>>>>> parent of 654f1b9... Add v3.20.0
         return {
             publicKey: stripeApiKeys.publicKey,
             secretKey: stripeApiKeys.secretKey,

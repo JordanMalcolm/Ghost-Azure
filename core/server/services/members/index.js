@@ -22,7 +22,16 @@ const membersConfig = new MembersConfigProvider({
 let membersApi;
 let membersSettings;
 
+<<<<<<< HEAD
 function reconfigureMembersAPI() {
+=======
+// Bind to events to automatically keep subscription info up-to-date from settings
+events.on('settings.edited', function updateSettingFromModel(settingModel) {
+    if (!['members_subscription_settings'].includes(settingModel.get('key'))) {
+        return;
+    }
+
+>>>>>>> parent of 654f1b9... Add v3.20.0
     const reconfiguredMembersAPI = createMembersApiInstance(membersConfig);
     reconfiguredMembersAPI.bus.on('ready', function () {
         membersApi = reconfiguredMembersAPI;

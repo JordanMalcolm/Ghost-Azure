@@ -52,8 +52,7 @@ function haxGetMembersPriceData() {
         AUD: '$',
         CAD: '$',
         GBP: '£',
-        EUR: '€',
-        INR: '₹'
+        EUR: '€'
     };
     const defaultPriceData = {
         monthly: 0,

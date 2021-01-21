@@ -42,9 +42,5 @@ module.exports = {
     setupMiddleware: function setupMiddleware(siteApp) {
         siteApp.use(middleware.checkIsPrivate);
         siteApp.use(middleware.filterPrivateRoutes);
-    },
-
-    setupErrorHandling: function setupErrorHandling(siteApp) {
-        siteApp.use(middleware.handle404);
     }
 };

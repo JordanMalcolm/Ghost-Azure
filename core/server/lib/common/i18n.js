@@ -8,8 +8,7 @@ const isEqual = require('lodash/isEqual');
 const isNil = require('lodash/isNil');
 const merge = require('lodash/merge');
 const get = require('lodash/get');
-const errors = require('@tryghost/errors');
-const logging = require('../../../shared/logging');
+const {errors, logging} = require('./');
 
 class I18n {
     constructor(locale) {

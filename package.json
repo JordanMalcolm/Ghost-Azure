@@ -1,10 +1,14 @@
 {
   "name": "ghost",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "3.40.5",
 =======
   "version": "3.39.3",
 >>>>>>> parent of c0a0145... Add v3.40.0
+=======
+  "version": "3.19.2",
+>>>>>>> parent of 654f1b9... Add v3.20.0
   "description": "The professional publishing platform",
   "author": "Ghost Foundation",
   "homepage": "https://ghost.org",
@@ -44,6 +48,7 @@
     "cli": "^1.12.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@nexes/nql": "0.5.0",
 <<<<<<< HEAD
     "@sentry/node": "5.29.2",
@@ -92,6 +97,30 @@
     "@tryghost/vhost-middleware": "1.0.10",
     "@tryghost/zip": "1.1.7",
     "ajv": "6.12.6",
+=======
+    "@nexes/nql": "0.4.0",
+    "@sentry/node": "5.17.0",
+    "@tryghost/adapter-manager": "0.1.6",
+    "@tryghost/errors": "0.2.0",
+    "@tryghost/helpers": "1.1.27",
+    "@tryghost/image-transform": "0.2.4",
+    "@tryghost/kg-card-factory": "2.1.1",
+    "@tryghost/kg-default-atoms": "2.0.1",
+    "@tryghost/kg-default-cards": "2.1.0",
+    "@tryghost/kg-markdown-html-renderer": "2.0.1",
+    "@tryghost/kg-mobiledoc-html-renderer": "3.0.1",
+    "@tryghost/magic-link": "^0.4.8",
+    "@tryghost/members-api": "0.20.1",
+    "@tryghost/members-ssr": "0.8.1",
+    "@tryghost/mw-session-from-token": "0.1.4",
+    "@tryghost/session-service": "0.1.4",
+    "@tryghost/social-urls": "0.1.9",
+    "@tryghost/string": "0.1.9",
+    "@tryghost/url-utils": "0.6.18",
+    "@tryghost/vhost-middleware": "1.0.5",
+    "@tryghost/zip": "1.1.1",
+    "ajv": "6.12.2",
+>>>>>>> parent of 654f1b9... Add v3.20.0
     "amperize": "0.6.1",
     "analytics-node": "3.4.0-beta.3",
     "bluebird": "3.7.2",

@@ -126,7 +126,6 @@ module.exports = {
             'source',
             'email_recipient_filter',
             'send_email_when_published',
-            'force_rerender',
             // NOTE: only for internal context
             'forUpdate',
             'transacting'

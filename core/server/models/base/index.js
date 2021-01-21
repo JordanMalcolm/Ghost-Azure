@@ -39,9 +39,6 @@ ghostBookshelf.plugin(plugins.eagerLoad);
 // Add committed/rollback events.
 ghostBookshelf.plugin(plugins.transactionEvents);
 
-// Load the Ghost custom-query plugin, which applying a custom query to findPage requests
-ghostBookshelf.plugin(plugins.customQuery);
-
 // Load the Ghost filter plugin, which handles applying a 'filter' to findPage requests
 ghostBookshelf.plugin(plugins.filter);
 
@@ -929,7 +926,17 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         const requestedColumns = options.columns;
 
         // Set this to true or pass ?debug=true as an API option to get output
+<<<<<<< HEAD
         itemCollection.debug = unfilteredOptions.debug && config.get('env') !== 'production';
+=======
+        itemCollection.debug = options.debug && config.get('env') !== 'production';
+
+        // Add Filter behaviour
+        itemCollection.applyDefaultAndCustomFilters(options);
+
+        // Apply model-specific search behaviour
+        itemCollection.applySearchQuery(options);
+>>>>>>> parent of 654f1b9... Add v3.20.0
 
         // Ensure only valid fields/columns are added to query
         // and append default columns to fetch

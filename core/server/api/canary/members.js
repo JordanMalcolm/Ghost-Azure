@@ -157,8 +157,7 @@ module.exports = {
             'order',
             'debug',
             'page',
-            'search',
-            'paid'
+            'search'
         ],
         permissions: true,
         validation: {},
@@ -257,7 +256,7 @@ module.exports = {
                 const isStripeLinkingError = error.message && (error.message.match(/customer|plan|subscription/g));
                 if (member && isStripeLinkingError) {
                     if (error.message.indexOf('customer') && error.code === 'resource_missing') {
-                        error.message = `Member not imported. ${error.message}`;
+                        error.message = `Member not imported, ${error.message}`;
                         error.context = i18n.t('errors.api.members.stripeCustomerNotFound.context');
                         error.help = i18n.t('errors.api.members.stripeCustomerNotFound.help');
                     }
@@ -431,48 +430,13 @@ module.exports = {
         }
     },
 
-    validateImport: {
-        permissions: {
-            method: 'add'
-        },
-        headers: {},
-        async query(frame) {
-            const importedMembers = frame.data.members;
-
-            await Promise.map(importedMembers, (async (entry) => {
-                if (entry.stripe_customer_id) {
-                    if (!membersService.config.isStripeConnected()) {
-                        throw new errors.ValidationError({
-                            message: i18n.t('errors.api.members.stripeNotConnected.message', {
-                                id: entry.stripe_customer_id
-                            }),
-                            context: i18n.t('errors.api.members.stripeNotConnected.context'),
-                            help: i18n.t('errors.api.members.stripeNotConnected.help')
-                        });
-                    }
-
-                    try {
-                        await membersService.api.members.getStripeCustomer(entry.stripe_customer_id);
-                    } catch (error) {
-                        throw new errors.ValidationError({
-                            message: `Member not imported. ${error.message}`,
-                            context: i18n.t('errors.api.members.stripeCustomerNotFound.context'),
-                            help: i18n.t('errors.api.members.stripeCustomerNotFound.help')
-                        });
-                    }
-                }
-            }));
-
-            return null;
-        }
-    },
-
     importCSV: {
         statusCode: 201,
         permissions: {
             method: 'add'
         },
         async query(frame) {
+<<<<<<< HEAD
             let imported = {
                 count: 0
             };
@@ -497,6 +461,50 @@ module.exports = {
                 if (validationErrors.length) {
                     invalid.errors.push(...validationErrors);
                 }
+=======
+            let filePath = frame.file.path;
+            let fulfilled = 0;
+            let invalid = 0;
+            let duplicates = 0;
+
+            const columnsToExtract = [{
+                name: 'email',
+                lookup: /^email/i
+            }, {
+                name: 'name',
+                lookup: /name/i
+            }, {
+                name: 'note',
+                lookup: /note/i
+            }, {
+                name: 'subscribed_to_emails',
+                lookup: /subscribed_to_emails/i
+            }, {
+                name: 'stripe_customer_id',
+                lookup: /stripe_customer_id/i
+            }, {
+                name: 'complimentary_plan',
+                lookup: /complimentary_plan/i
+            }, {
+                name: 'labels',
+                lookup: /labels/i
+            }, {
+                name: 'created_at',
+                lookup: /created_at/i
+            }];
+
+            // NOTE: custom labels have to be created in advance otherwise there are conflicts
+            //       when processing member creation in parallel later on in import process
+            const importSetLabels = serializeMemberLabels(frame.data.labels);
+            await createLabels(importSetLabels, frame.options);
+
+            return fsLib.readCSV({
+                path: filePath,
+                columnsToExtract: columnsToExtract
+            }).then((result) => {
+                const sanitized = sanitizeInput(result);
+                invalid += result.length - sanitized.length;
+>>>>>>> parent of 654f1b9... Add v3.20.0
 
                 return Promise.map(sanitized, ((entry) => {
                     const api = require('./index');
@@ -534,9 +542,10 @@ module.exports = {
                 }), {concurrency: 10})
                     .each((inspection) => {
                         if (inspection.isFulfilled()) {
-                            imported.count = imported.count + 1;
+                            fulfilled = fulfilled + 1;
                         } else {
                             const error = inspection.reason();
+<<<<<<< HEAD
 
                             // NOTE: if the error happens as a result of pure API call it doesn't get logged anywhere
                             //       for this reason we have to make sure any unexpected errors are logged here
@@ -713,6 +722,31 @@ module.exports = {
                             invalid
                         },
                         import_label: importLabel
+=======
+                            if (error instanceof errors.ValidationError && !(error.message.match(/Stripe/g))) {
+                                duplicates = duplicates + 1;
+                            } else {
+                                // NOTE: if the error happens as a result of pure API call it doesn't get logged anywhere
+                                //       for this reason we have to make sure any unexpected errors are logged here
+                                if (Array.isArray(error)) {
+                                    logging.error(error[0]);
+                                } else {
+                                    logging.error(error);
+                                }
+
+                                invalid = invalid + 1;
+                            }
+                        }
+                    });
+            }).then(() => {
+                return {
+                    meta: {
+                        stats: {
+                            imported: fulfilled,
+                            duplicates: duplicates,
+                            invalid: invalid
+                        }
+>>>>>>> parent of 654f1b9... Add v3.20.0
                     }
                 };
             });

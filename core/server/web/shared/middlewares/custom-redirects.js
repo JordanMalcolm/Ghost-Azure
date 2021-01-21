@@ -53,6 +53,7 @@ _private.registerRoutes = () => {
             customRedirectsRouter.get(new RegExp(redirect.from, options), function (req, res) {
                 const maxAge = redirect.permanent ? config.get('caching:customRedirects:maxAge') : 0;
                 const toURL = url.parse(redirect.to);
+<<<<<<< HEAD
                 const toURLParams = querystring.parse(toURL.query);
                 const currentURL = url.parse(req.url);
                 const currentURLParams = querystring.parse(currentURL.query);
@@ -61,14 +62,18 @@ _private.registerRoutes = () => {
 
                 toURL.pathname = currentURL.pathname.replace(new RegExp(redirect.from, options), toURL.pathname);
                 toURL.search = search !== '' ? `?${search}` : null;
+=======
+                const currentURL = url.parse(req.originalUrl);
 
-                /**
-                 * Only if the URL is internal should we prepend the Ghost subdirectory
-                 * @see https://github.com/TryGhost/Ghost/issues/10776
-                 */
-                if (!toURL.hostname) {
-                    toURL.pathname = urlUtils.urlJoin(urlUtils.getSubdir(), toURL.pathname);
-                }
+                // if the URL points to an external website, remove Ghost's base path
+                /** @see https://github.com/TryGhost/Ghost/issues/10776 */
+                const currentPath = (toURL.hostname)
+                    ? currentURL.pathname.replace(urlUtils.getSubdir(), '')
+                    : currentURL.pathname;
+>>>>>>> parent of 654f1b9... Add v3.20.0
+
+                toURL.pathname = currentPath.replace(new RegExp(redirect.from, options), toURL.pathname);
+                toURL.search = currentURL.search;
 
                 res.set({
                     'Cache-Control': `public, max-age=${maxAge}`

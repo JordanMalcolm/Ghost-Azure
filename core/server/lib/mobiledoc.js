@@ -31,6 +31,7 @@ module.exports = {
 
             cardFactory = new CardFactory({
                 siteUrl: config.get('url'),
+<<<<<<< HEAD
                 imageOptimization: config.get('imageOptimization'),
                 canTransformImage(storagePath) {
                     const {ext} = path.parse(storagePath);
@@ -39,6 +40,9 @@ module.exports = {
                         && imageTransform.canTransformFileExtension(ext)
                         && typeof storage.getStorage().saveRaw === 'function';
                 }
+=======
+                contentImageSizes: config.get('imageOptimization:contentImageSizes')
+>>>>>>> parent of 654f1b9... Add v3.20.0
             });
 
             cards = defaultCards.map((card) => {
@@ -85,6 +89,7 @@ module.exports = {
                 });
             };
         }
+<<<<<<< HEAD
     },
 
     // used when force-rerendering post content to ensure that old image card
@@ -161,5 +166,7 @@ module.exports = {
         cardFactory = null;
         cards = null;
         mobiledocHtmlRenderer = null;
+=======
+>>>>>>> parent of 654f1b9... Add v3.20.0
     }
 };

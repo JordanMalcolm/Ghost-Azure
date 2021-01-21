@@ -125,7 +125,6 @@ module.exports = {
             'id',
             'formats',
             'source',
-            'force_rerender',
             // NOTE: only for internal context
             'forUpdate',
             'transacting'

@@ -493,6 +493,7 @@
   resolved "https://registry.yarnpkg.com/@tryghost/kg-clean-basic-html/-/kg-clean-basic-html-1.0.10.tgz#5d1cd80d3ce1c0e972acf3fe4090d72ab0eb382c"
   integrity sha512-2mZrZkv0Jy+RKXff+joqdfkmNbM2AZNSso7WmCXr4uIlCzXUJ2ERYUANN1dYCACGmscQfCp5RNHwZyHOGv+ZKQ==
 
+<<<<<<< HEAD
 "@tryghost/kg-default-atoms@2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@tryghost/kg-default-atoms/-/kg-default-atoms-2.0.2.tgz#b8a1143bb0fa559cd46a96181c91771a35a3547b"
@@ -502,6 +503,12 @@
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@tryghost/kg-default-cards/-/kg-default-cards-3.0.1.tgz#ee2a7854c5b9fc6cedfba4288dc0061625f9f3ee"
   integrity sha512-JVh8lvr3jr39orhdYhQ5HuP2eLii1DNYMc+BiAluqb1Ck3Zrb3bGshigj8zIfm5WpAjfvXeeZaUTmhuPruDrSg==
+=======
+"@tryghost/kg-default-cards@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@tryghost/kg-default-cards/-/kg-default-cards-2.1.0.tgz#a218079d2e6662fe5b0117740faecf94cde6fd35"
+  integrity sha512-8OKPFm210ACzjojmQLPCcRVNattc66Ub+Re5QsG6x09q7+xNV4IiTRt7L+pU4UizmHQ7y6jOFTWXH35az0O1Qw==
+>>>>>>> parent of 654f1b9... Add v3.20.0
   dependencies:
     "@tryghost/kg-markdown-html-renderer" "^2.0.4"
     "@tryghost/url-utils" "^0.6.14"
@@ -543,10 +550,17 @@
     jsonwebtoken "^8.5.1"
     lodash "^4.17.15"
 
+<<<<<<< HEAD
 "@tryghost/members-api@0.35.0":
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@tryghost/members-api/-/members-api-0.35.0.tgz#413de8614ba431aaaa683425ab633084eefc010f"
   integrity sha512-8N9npMF01B5463NCcKlN9Rli+8nfde2OS2/vw4VJqDdNqgMnoZTyJh43iRqTZbDNH4/47tFAm0fHwyfRdsJ3nA==
+=======
+"@tryghost/members-api@0.20.1":
+  version "0.20.1"
+  resolved "https://registry.npmjs.org/@tryghost/members-api/-/members-api-0.20.1.tgz#a4477eb77ac9657a0a238148cf95ac0056d3607a"
+  integrity sha512-IDZGHwKutebCAQq0Oya+sdxFsFw79X/NWg+MfEULJCtLvW09bFdtBc1RWyXrXiPBkFbnKu+zOkhIg1I5Lx48Nw==
+>>>>>>> parent of 654f1b9... Add v3.20.0
   dependencies:
     "@tryghost/magic-link" "^0.6.2"
     bluebird "^3.5.4"

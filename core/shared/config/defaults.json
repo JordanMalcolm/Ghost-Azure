@@ -107,8 +107,7 @@
         }
     },
     "imageOptimization": {
-        "resize": true,
-        "srcsets": true
+        "resize": true
     },
     "compress": true,
     "preloadHeaders": false,

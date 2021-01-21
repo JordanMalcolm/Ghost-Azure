@@ -1,12 +1,17 @@
+const {i18n} = require('../../lib/common');
 const errors = require('@tryghost/errors');
 const {extract, hasProvider} = require('oembed-parser');
 const Promise = require('bluebird');
+const externalRequest = require('../../lib/request-external');
 const cheerio = require('cheerio');
 const _ = require('lodash');
+<<<<<<< HEAD
 const {CookieJar} = require('tough-cookie');
 const config = require('../../../shared/config');
 const {i18n} = require('../../lib/common');
 const externalRequest = require('../../lib/request-external');
+=======
+>>>>>>> parent of 654f1b9... Add v3.20.0
 
 async function fetchBookmarkData(url) {
     const metascraper = require('metascraper')([
@@ -98,13 +103,7 @@ function isIpOrLocalhost(url) {
         const IPV6_REGEX = /:/; // fqdns will not have colons
         const HTTP_REGEX = /^https?:/i;
 
-        const siteUrl = new URL(config.get('url'));
-        const {protocol, hostname, host} = new URL(url);
-
-        // allow requests to Ghost's own url through
-        if (siteUrl.host === host) {
-            return false;
-        }
+        const {protocol, hostname} = new URL(url);
 
         if (!HTTP_REGEX.test(protocol) || hostname === 'localhost' || IPV4_REGEX.test(hostname) || IPV6_REGEX.test(hostname)) {
             return true;
