@@ -11,13 +11,11 @@ const Member = ghostBookshelf.Model.extend({
     defaults() {
         return {
             subscribed: true,
-            uuid: uuid.v4(),
-            email_count: 0,
-            email_opened_count: 0
+            uuid: uuid.v4()
         };
     },
 
-    relationships: ['labels', 'stripeCustomers', 'email_recipients'],
+    relationships: ['labels', 'stripeCustomers'],
 
     // do not delete email_recipients records when a member is destroyed. Recipient
     // records are used for analytics and historical records
@@ -29,8 +27,7 @@ const Member = ghostBookshelf.Model.extend({
 
     relationshipBelongsTo: {
         labels: 'labels',
-        stripeCustomers: 'members_stripe_customers',
-        email_recipients: 'email_recipients'
+        stripeCustomers: 'members_stripe_customers'
     },
 
     labels: function labels() {
@@ -57,10 +54,6 @@ const Member = ghostBookshelf.Model.extend({
             'id',
             'customer_id'
         );
-    },
-
-    email_recipients() {
-        return this.hasMany('EmailRecipient', 'member_id', 'id');
     },
 
     serialize(options) {
@@ -239,14 +232,6 @@ const Member = ghostBookshelf.Model.extend({
                 'members_stripe_customers.member_id'
             );
             queryBuilder.whereNull('members_stripe_customers.member_id');
-        }
-    },
-
-    orderRawQuery(field, direction) {
-        if (field === 'email_open_rate') {
-            return {
-                orderByRaw: `members.email_open_rate IS NOT NULL DESC, members.email_open_rate ${direction}`
-            };
         }
     },
 

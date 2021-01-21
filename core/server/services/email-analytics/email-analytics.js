@@ -81,7 +81,7 @@ class EmailAnalyticsService {
             await this.aggregateEmailStats(emailId);
         }
         for (const memberId of memberIds) {
-            await this.aggregateMemberStats(memberId);
+            await this.aggregateEmailStats(memberId);
         }
     }
 

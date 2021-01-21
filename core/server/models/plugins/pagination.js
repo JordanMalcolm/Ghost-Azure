@@ -207,16 +207,10 @@ const pagination = function pagination(bookshelf) {
                             paginationUtils.handleRelation(self, property);
                         }
                     });
-                }
-
-                if (options.orderRaw) {
-                    self.query((qb) => {
+                } else if (options.orderRaw) {
+                    self.query(function (qb) {
                         qb.orderByRaw(options.orderRaw);
                     });
-                }
-
-                if (!_.isEmpty(options.eagerLoad)) {
-                    options.eagerLoad.forEach(property => paginationUtils.handleRelation(self, property));
                 }
 
                 if (options.groups && !_.isEmpty(options.groups)) {

@@ -1,21 +1,20 @@
 const _ = require('lodash');
 
-const orderPlugin = function orderPlugin(Bookshelf) {
+const order = function order(Bookshelf) {
     Bookshelf.Model = Bookshelf.Model.extend({
         orderAttributes() {},
-        orderRawQuery() {},
 
         parseOrderOption: function (orderQueryString, withRelated) {
-            const order = {};
-            const orderRaw = [];
-            const eagerLoadArray = [];
+            let orderAttributes;
+            let result;
+            let rules = [];
 
-            const orderAttributes = this.orderAttributes();
+            orderAttributes = this.orderAttributes();
             if (withRelated && withRelated.indexOf('count.posts') > -1) {
                 orderAttributes.push('count.posts');
             }
+            result = {};
 
-            let rules = [];
             // CASE: repeat order query parameter keys are present
             if (_.isArray(orderQueryString)) {
                 orderQueryString.forEach((qs) => {
@@ -25,7 +24,7 @@ const orderPlugin = function orderPlugin(Bookshelf) {
                 rules = orderQueryString.split(',');
             }
 
-            _.each(rules, (rule) => {
+            _.each(rules, function (rule) {
                 let match;
                 let field;
                 let direction;
@@ -40,16 +39,6 @@ const orderPlugin = function orderPlugin(Bookshelf) {
                 field = match[1].toLowerCase();
                 direction = match[2].toUpperCase();
 
-                const orderRawQuery = this.orderRawQuery(field, direction, withRelated);
-
-                if (orderRawQuery) {
-                    orderRaw.push(orderRawQuery.orderByRaw);
-                    if (orderRawQuery.eagerLoad) {
-                        eagerLoadArray.push(orderRawQuery.eagerLoad);
-                    }
-                    return;
-                }
-
                 const matchingOrderAttribute = orderAttributes.find((orderAttribute) => {
                     // NOTE: this logic assumes we use different field names for "parent" and "child" relations.
                     //       E.g.: ['parent.title', 'child.title'] and ['child.title', 'parent.title'] - would not
@@ -62,16 +51,12 @@ const orderPlugin = function orderPlugin(Bookshelf) {
                     return;
                 }
 
-                order[matchingOrderAttribute] = direction;
+                result[matchingOrderAttribute] = direction;
             });
 
-            return {
-                order,
-                orderRaw: orderRaw.join(', '),
-                eagerLoad: _.uniq(eagerLoadArray)
-            };
+            return result;
         }
     });
 };
 
-module.exports = orderPlugin;
+module.exports = order;

@@ -65,7 +65,7 @@ module.exports = {
 
     // Various utils, needs cleaning up / simplifying
     socialUrls: require('@tryghost/social-urls'),
-    blogIcon: require('../../server/lib/image').blogIcon,
+    blogIcon: require('../../server/lib/image/blog-icon'),
     urlService: require('./url'),
     urlUtils: require('../../shared/url-utils'),
     localUtils: require('./themes/handlebars/utils')

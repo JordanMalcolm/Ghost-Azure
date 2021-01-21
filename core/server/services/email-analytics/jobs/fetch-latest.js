@@ -49,7 +49,23 @@ if (parentPort) {
     const aggregateEndDate = new Date();
     debug(`Finished aggregating email analytics in ${aggregateEndDate - aggregateStartDate}ms`);
 
+<<<<<<< HEAD
     logging.info(`Fetched ${eventStats.totalEvents} events and aggregated stats for ${eventStats.emailIds.length} emails in ${aggregateEndDate - fetchStartDate}ms`);
+=======
+        logging.info(`Fetched ${eventStats.totalEvents} events and aggregated stats for ${eventStats.emailIds.length} emails in ${aggregateEndDate - fetchStartDate}ms`);
+
+        if (parentPort) {
+            parentPort.postMessage('done');
+        } else {
+            // give the logging pipes time finish writing before exit
+            setTimeout(() => {
+                process.exit(0);
+            }, 1000);
+        }
+    } catch (error) {
+        logging.error(error);
+        sentry.captureException(error);
+>>>>>>> parent of c0a0145... Add v3.40.0
 
     if (parentPort) {
         parentPort.postMessage('done');
