@@ -1,8 +1,15 @@
+<<<<<<< HEAD:core/frontend/services/themes/handlebars/register.js
 const Promise = require('bluebird');
 const errors = require('@tryghost/errors');
 const hbs = require('../engine');
 const config = require('../../../../shared/config');
 const logging = require('../../../../shared/logging');
+=======
+var hbs = require('../services/themes/engine'),
+    Promise = require('bluebird'),
+    config = require('../../server/config'),
+    proxy = require('./proxy');
+>>>>>>> parent of 3218606... Add v3.13.0:core/frontend/helpers/register.js
 
 // Register an async handlebars helper for a given handlebars instance
 function asyncHelperWrapper(hbsInstance, name, fn) {
@@ -17,6 +24,7 @@ function asyncHelperWrapper(hbsInstance, name, fn) {
         Promise.resolve(fn.call(this, context, options)).then(function asyncHelperSuccess(result) {
             cb(result);
         }).catch(function asyncHelperError(err) {
+<<<<<<< HEAD:core/frontend/services/themes/handlebars/register.js
             const wrappedErr = err instanceof errors.GhostError ? err : new errors.IncorrectUsageError({
                 err: err,
                 context: 'registerAsyncThemeHelper: ' + name,
@@ -26,8 +34,18 @@ function asyncHelperWrapper(hbsInstance, name, fn) {
             });
 
             const result = config.get('env') === 'development' ? wrappedErr : '';
+=======
+            var wrappedErr = err instanceof proxy.errors.GhostError ? err : new proxy.errors.IncorrectUsageError({
+                    err: err,
+                    context: 'registerAsyncThemeHelper: ' + name,
+                    errorDetails: {
+                        originalError: err
+                    }
+                }),
+                result = config.get('env') === 'development' ? wrappedErr : '';
+>>>>>>> parent of 3218606... Add v3.13.0:core/frontend/helpers/register.js
 
-            logging.error(wrappedErr);
+            proxy.logging.error(wrappedErr);
 
             cb(new hbsInstance.SafeString(result));
         });

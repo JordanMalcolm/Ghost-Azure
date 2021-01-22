@@ -79,12 +79,16 @@ module.exports = {
             frame.options.require = true;
 
             return models.Invite.destroy(frame.options)
+<<<<<<< HEAD
                 .then(() => null)
                 .catch(models.Invite.NotFoundError, () => {
                     return Promise.reject(new errors.NotFoundError({
                         message: i18n.t('errors.api.invites.inviteNotFound')
                     }));
                 });
+=======
+                .return(null);
+>>>>>>> parent of 3218606... Add v3.13.0
         }
     },
 

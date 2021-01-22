@@ -8,7 +8,8 @@
         "defaultViews": "core/server/views/",
         "defaultSettings": "core/frontend/services/settings/",
         "internalAppPath": "core/frontend/apps/",
-        "internalAdaptersPath": "core/server/adapters/",
+        "internalStoragePath": "core/server/adapters/storage/",
+        "internalSchedulingPath": "core/server/adapters/scheduling/",
         "migrationPath": "core/server/data/migrations",
         "publicFilePath": "core/server/public"
     },

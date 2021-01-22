@@ -146,6 +146,7 @@ module.exports = {
         },
         permissions: true,
         query(frame) {
+<<<<<<< HEAD
             return models.Label.destroy(frame.options)
                 .then(() => null)
                 .catch(models.Label.NotFoundError, () => {
@@ -153,6 +154,9 @@ module.exports = {
                         message: i18n.t('errors.api.labels.labelNotFound')
                     }));
                 });
+=======
+            return models.Label.destroy(frame.options).return(null);
+>>>>>>> parent of 3218606... Add v3.13.0
         }
     }
 };

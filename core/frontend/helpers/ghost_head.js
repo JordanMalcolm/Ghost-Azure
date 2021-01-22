@@ -2,12 +2,28 @@
 // Usage: `{{ghost_head}}`
 //
 // Outputs scripts and other assets at the top of a Ghost theme
+<<<<<<< HEAD
 const {metaData, escapeExpression, SafeString, logging, settingsCache, config, blogIcon, labs} = require('../services/proxy');
 const _ = require('lodash');
 const debug = require('ghost-ignition').debug('ghost_head');
 const templateStyles = require('./tpl/styles');
 
 const getMetaData = metaData.get;
+=======
+var proxy = require('./proxy'),
+    _ = require('lodash'),
+    debug = require('ghost-ignition').debug('ghost_head'),
+
+    getMetaData = proxy.metaData.get,
+    getAssetUrl = proxy.metaData.getAssetUrl,
+    escapeExpression = proxy.escapeExpression,
+    SafeString = proxy.SafeString,
+    logging = proxy.logging,
+    settingsCache = proxy.settingsCache,
+    config = proxy.config,
+    blogIconUtils = proxy.blogIcon,
+    labs = proxy.labs;
+>>>>>>> parent of 3218606... Add v3.13.0
 
 function writeMetaTag(property, content, type) {
     type = type || property.substring(0, 7) === 'twitter' ? 'name' : 'property';
@@ -109,6 +125,7 @@ module.exports = function ghost_head(options) { // eslint-disable-line camelcase
         return;
     }
 
+<<<<<<< HEAD
     const head = [];
     const dataRoot = options.data.root;
     const context = dataRoot._locals.context ? dataRoot._locals.context : null;
@@ -120,6 +137,18 @@ module.exports = function ghost_head(options) { // eslint-disable-line camelcase
     const referrerPolicy = config.get('referrerPolicy') ? config.get('referrerPolicy') : 'no-referrer-when-downgrade';
     const favicon = blogIcon.getIconUrl();
     const iconType = blogIcon.getIconType(favicon);
+=======
+    var head = [],
+        dataRoot = options.data.root,
+        context = dataRoot._locals.context ? dataRoot._locals.context : null,
+        safeVersion = dataRoot._locals.safeVersion,
+        postCodeInjection = dataRoot && dataRoot.post ? dataRoot.post.codeinjection_head : null,
+        globalCodeinjection = settingsCache.get('ghost_head'),
+        useStructuredData = !config.isPrivacyDisabled('useStructuredData'),
+        referrerPolicy = config.get('referrerPolicy') ? config.get('referrerPolicy') : 'no-referrer-when-downgrade',
+        favicon = blogIconUtils.getIconUrl(),
+        iconType = blogIconUtils.getIconType(favicon);
+>>>>>>> parent of 3218606... Add v3.13.0
 
     debug('preparation complete, begin fetch');
 

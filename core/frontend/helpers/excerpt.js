@@ -5,9 +5,16 @@
 //
 // Defaults to words="50"
 
+<<<<<<< HEAD
 const {SafeString, metaData} = require('../services/proxy');
 const _ = require('lodash');
 const getMetaDataExcerpt = metaData.getMetaDataExcerpt;
+=======
+var proxy = require('./proxy'),
+    _ = require('lodash'),
+    SafeString = proxy.SafeString,
+    getMetaDataExcerpt = proxy.metaData.getMetaDataExcerpt;
+>>>>>>> parent of 3218606... Add v3.13.0
 
 module.exports = function excerpt(options) {
     let truncateOptions = (options || {}).hash || {};

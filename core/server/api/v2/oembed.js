@@ -4,7 +4,6 @@ const {extract, hasProvider} = require('oembed-parser');
 const Promise = require('bluebird');
 const externalRequest = require('../../lib/request-external');
 const cheerio = require('cheerio');
-const _ = require('lodash');
 
 const findUrlWithProvider = (url) => {
     let provider;
@@ -30,6 +29,7 @@ const findUrlWithProvider = (url) => {
     return {url, provider};
 };
 
+<<<<<<< HEAD
 function unknownProvider(url) {
     return Promise.reject(new errors.ValidationError({
         message: i18n.t('errors.api.oembed.unknownProvider'),
@@ -52,31 +52,43 @@ function isIpOrLocalhost(url) {
         const HTTP_REGEX = /^https?:/i;
 
         const {protocol, hostname} = new URL(url);
+=======
+const getOembedUrlFromHTML = (html) => {
+    return cheerio('link[type="application/json+oembed"]', html).attr('href');
+};
+>>>>>>> parent of 3218606... Add v3.13.0
 
-        if (!HTTP_REGEX.test(protocol) || hostname === 'localhost' || IPV4_REGEX.test(hostname) || IPV6_REGEX.test(hostname)) {
-            return true;
-        }
+module.exports = {
+    docName: 'oembed',
 
-        return false;
-    } catch (e) {
-        return true;
-    }
-}
+    read: {
+        permissions: false,
+        data: [
+            'url'
+        ],
+        options: [],
+        query({data}) {
+            let {url} = data;
 
-function fetchOembedData(_url) {
-    // parse the url then validate the protocol and host to make sure it's
-    // http(s) and not an IP address or localhost to avoid potential access to
-    // internal network endpoints
-    if (isIpOrLocalhost(_url)) {
-        return unknownProvider();
-    }
+            function unknownProvider() {
+                return Promise.reject(new common.errors.ValidationError({
+                    message: common.i18n.t('errors.api.oembed.unknownProvider'),
+                    context: url
+                }));
+            }
 
-    // check against known oembed list
-    let {url, provider} = findUrlWithProvider(_url);
-    if (provider) {
-        return knownProvider(url);
-    }
+            function knownProvider(url) {
+                return extract(url).catch((err) => {
+                    return Promise.reject(new common.errors.InternalServerError({
+                        message: err.message
+                    }));
+                });
+            }
 
+            let provider;
+            ({url, provider} = findUrlWithProvider(url));
+
+<<<<<<< HEAD
     // url not in oembed list so fetch it in case it's a redirect or has a
     // <link rel="alternate" type="application/json+oembed"> element
     return externalRequest(url, {
@@ -87,11 +99,13 @@ function fetchOembedData(_url) {
         // url changed after fetch, see if we were redirected to a known oembed
         if (pageResponse.url !== url) {
             ({url, provider} = findUrlWithProvider(pageResponse.url));
+=======
+>>>>>>> parent of 3218606... Add v3.13.0
             if (provider) {
                 return knownProvider(url);
             }
-        }
 
+<<<<<<< HEAD
         // check for <link rel="alternate" type="application/json+oembed"> element
         let oembedUrl;
         try {
@@ -138,37 +152,33 @@ function fetchOembedData(_url) {
                         'thumbnail_height'
                     ];
                     const oembed = _.pick(body, knownFields);
-
-                    // ensure we have required data for certain types
-                    if (oembed.type === 'photo' && !oembed.url) {
-                        return;
-                    }
-                    if ((oembed.type === 'video' || oembed.type === 'rich') && (!oembed.html || !oembed.width || !oembed.height)) {
-                        return;
-                    }
-
-                    // return the extracted object, don't pass through the response body
-                    return oembed;
+=======
+            // see if the URL is a redirect to cater for shortened urls
+            return request(url, {
+                method: 'GET',
+                timeout: 2 * 1000,
+                followRedirect: true
+            }).then((response) => {
+                if (response.url !== url) {
+                    ({url, provider} = findUrlWithProvider(response.url));
+                    return provider ? knownProvider(url) : unknownProvider();
                 }
-            }).catch(() => {});
-        }
-    });
-}
+>>>>>>> parent of 3218606... Add v3.13.0
 
-module.exports = {
-    docName: 'oembed',
+                const oembedUrl = getOembedUrlFromHTML(response.body);
 
-    read: {
-        permissions: false,
-        data: [
-            'url'
-        ],
-        options: [],
-        query({data: {url}}) {
-            return fetchOembedData(url).then((response) => {
-                return response || unknownProvider(url);
+                if (!oembedUrl) {
+                    return unknownProvider();
+                }
+
+                return request(oembedUrl, {
+                    method: 'GET',
+                    json: true
+                }).then((response) => {
+                    return response.body;
+                });
             }).catch(() => {
-                return unknownProvider(url);
+                return unknownProvider();
             });
         }
     }

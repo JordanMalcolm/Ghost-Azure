@@ -27,6 +27,7 @@ function getSlackSettings() {
 }
 
 function ping(post) {
+<<<<<<< HEAD
     let message;
     let title;
     let author;
@@ -34,20 +35,20 @@ function ping(post) {
     let slackData = {};
     let slackSettings = getSlackSettings();
     let blogTitle = settingsCache.get('title');
+=======
+    let message,
+        title,
+        author,
+        slackData = {},
+        slackSettings = getSlackSettings(),
+        blogTitle = settingsCache.get('title');
+>>>>>>> parent of 3218606... Add v3.13.0
 
     // If this is a post, we want to send the link of the post
     if (schema.isPost(post)) {
         message = urlService.getUrlByResourceId(post.id, {absolute: true});
         title = post.title ? post.title : null;
         author = post.authors ? post.authors[0] : null;
-
-        if (post.custom_excerpt) {
-            description = post.custom_excerpt;
-        } else if (post.html) {
-            description = `${post.html.replace(/<[^>]+>/g, '').split('.').slice(0, 3).join('.')}.`;
-        } else {
-            description = null;
-        }
     } else {
         message = post.message;
     }
@@ -88,7 +89,7 @@ function ping(post) {
                         fields: [
                             {
                                 title: 'Description',
-                                value: description,
+                                value: post.custom_excerpt ? post.custom_excerpt : `${post.html.replace(/<[^>]+>/g, '').split('.').slice(0, 3).join('.')}.`,
                                 short: false
                             }
                         ]

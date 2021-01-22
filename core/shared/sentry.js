@@ -4,8 +4,12 @@ const errors = require('@tryghost/errors');
 
 if (sentryConfig && !sentryConfig.disabled) {
     const Sentry = require('@sentry/node');
+<<<<<<< HEAD:core/shared/sentry.js
     const version = require('../server/lib/ghost-version').full;
     const environment = config.get('env');
+=======
+    const version = require('../../package.json').version;
+>>>>>>> parent of 3218606... Add v3.13.0:core/server/sentry.js
     Sentry.init({
         dsn: sentryConfig.dsn,
         release: 'ghost@' + version,

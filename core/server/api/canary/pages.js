@@ -199,7 +199,7 @@ module.exports = {
             frame.options.require = true;
 
             return models.Post.destroy(frame.options)
-                .then(() => null)
+                .return(null)
                 .catch(models.Post.NotFoundError, () => {
                     return Promise.reject(new errors.NotFoundError({
                         message: i18n.t('errors.api.pages.pageNotFound')

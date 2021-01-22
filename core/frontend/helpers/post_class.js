@@ -2,7 +2,13 @@
 // Usage: `{{post_class}}`
 //
 // Output classes for the body element
+<<<<<<< HEAD
 const {SafeString} = require('../services/proxy');
+=======
+var proxy = require('./proxy'),
+    _ = require('lodash'),
+    SafeString = proxy.SafeString;
+>>>>>>> parent of 3218606... Add v3.13.0
 
 // We use the name post_class to match the helper for consistency:
 module.exports = function post_class() { // eslint-disable-line camelcase
@@ -31,9 +37,8 @@ module.exports = function post_class() { // eslint-disable-line camelcase
         classes.push('page');
     }
 
-    classes = classes.reduce(function (memo, item) {
+    classes = _.reduce(classes, function (memo, item) {
         return memo + ' ' + item;
     }, '');
-
     return new SafeString(classes.trim());
 };

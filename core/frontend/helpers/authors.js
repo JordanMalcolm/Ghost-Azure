@@ -6,8 +6,14 @@
 // By default, authors are separated by commas.
 //
 // Note that the standard {{#each authors}} implementation is unaffected by this helper.
+const proxy = require('./proxy');
 const _ = require('lodash');
+<<<<<<< HEAD
 const {SafeString, templates, urlService} = require('../services/proxy');
+=======
+const urlService = require('../services/url');
+const {SafeString, templates} = proxy;
+>>>>>>> parent of 3218606... Add v3.13.0
 const ghostHelperUtils = require('@tryghost/helpers').utils;
 
 module.exports = function authors(options = {}) {

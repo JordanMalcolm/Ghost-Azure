@@ -6,7 +6,15 @@
 //
 // Defaults to class="cancel-subscription-link" errorClass="cancel-subscription-error" cancelLabel="Cancel subscription" continueLabel="Continue subscription"
 
+<<<<<<< HEAD
 const {templates, errors, i18n, labs} = require('../services/proxy');
+=======
+const proxy = require('./proxy');
+
+const templates = proxy.templates;
+const errors = proxy.errors;
+const i18n = proxy.i18n;
+>>>>>>> parent of 3218606... Add v3.13.0
 
 function cancel_link(options) { // eslint-disable-line camelcase
     let truncateOptions = (options || {}).hash || {};

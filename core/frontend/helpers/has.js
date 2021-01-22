@@ -4,8 +4,14 @@
 //
 // Checks if a post has a particular property
 
+<<<<<<< HEAD
 const {logging, i18n} = require('../services/proxy');
+=======
+const proxy = require('./proxy');
+>>>>>>> parent of 3218606... Add v3.13.0
 const _ = require('lodash');
+const logging = proxy.logging;
+const i18n = proxy.i18n;
 const validAttrs = ['tag', 'author', 'slug','visibility', 'id', 'number', 'index', 'any', 'all'];
 
 function handleCount(ctxAttr, data) {

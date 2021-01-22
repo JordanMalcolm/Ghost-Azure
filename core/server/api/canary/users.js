@@ -155,6 +155,7 @@ module.exports = {
             return models.Base.transaction((t) => {
                 frame.options.transacting = t;
 
+<<<<<<< HEAD
                 return models.Post.destroyByAuthor(frame.options)
                     .then(() => {
                         return models.ApiKey.destroy({
@@ -174,6 +175,13 @@ module.exports = {
                         return models.User.destroy(Object.assign({status: 'all'}, frame.options));
                     })
                     .then(() => filename);
+=======
+                return Promise.all([
+                    models.Post.destroyByAuthor(frame.options)
+                ]).then(() => {
+                    return models.User.destroy(Object.assign({status: 'all'}, frame.options));
+                }).return(filename);
+>>>>>>> parent of 3218606... Add v3.13.0
             }).catch((err) => {
                 return Promise.reject(new errors.NoPermissionError({
                     err: err

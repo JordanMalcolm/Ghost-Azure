@@ -5,9 +5,17 @@
 // By default, tags are separated by commas.
 //
 // Note that the standard {{#each tags}} implementation is unaffected by this helper
+<<<<<<< HEAD
 const {urlService, SafeString, templates} = require('../services/proxy');
+=======
+const proxy = require('./proxy');
+>>>>>>> parent of 3218606... Add v3.13.0
 const _ = require('lodash');
 const ghostHelperUtils = require('@tryghost/helpers').utils;
+
+const urlService = proxy.urlService;
+const SafeString = proxy.SafeString;
+const templates = proxy.templates;
 
 module.exports = function tags(options) {
     options = options || {};

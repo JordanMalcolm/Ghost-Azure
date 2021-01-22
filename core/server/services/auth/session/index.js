@@ -1,10 +1,14 @@
-const adapterManager = require('../../adapter-manager');
-const createSessionService = require('@tryghost/session-service');
-const sessionFromToken = require('@tryghost/mw-session-from-token');
-const createSessionMiddleware = require('./middleware');
+module.exports = {
+    // @TODO: expose files/units and not functions of units
+    get createSession() {
+        return require('./middleware').createSession;
+    },
 
-const expressSession = require('./express-session');
+    get destroySession() {
+        return require('./middleware').destroySession;
+    },
 
+<<<<<<< HEAD
 const models = require('../../../models');
 const urlUtils = require('../../../../shared/url-utils');
 const url = require('url');
@@ -47,3 +51,9 @@ module.exports.createSessionFromToken = sessionFromToken({
     getLookupFromToken: ssoAdapter.getIdentityFromCredentials.bind(ssoAdapter),
     getTokenFromRequest: ssoAdapter.getRequestCredentials.bind(ssoAdapter)
 });
+=======
+    get authenticate() {
+        return require('./middleware').authenticate;
+    }
+};
+>>>>>>> parent of 3218606... Add v3.13.0

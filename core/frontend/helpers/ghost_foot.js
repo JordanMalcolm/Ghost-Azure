@@ -2,8 +2,15 @@
 // Usage: `{{ghost_foot}}`
 //
 // Outputs scripts and other assets at the bottom of a Ghost theme
+<<<<<<< HEAD
 const {SafeString, settingsCache} = require('../services/proxy');
 const _ = require('lodash');
+=======
+var proxy = require('./proxy'),
+    _ = require('lodash'),
+    SafeString = proxy.SafeString,
+    settingsCache = proxy.settingsCache;
+>>>>>>> parent of 3218606... Add v3.13.0
 
 // We use the name ghost_foot to match the helper for consistency:
 module.exports = function ghost_foot(options) { // eslint-disable-line camelcase

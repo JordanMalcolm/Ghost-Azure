@@ -3,13 +3,23 @@
 // `{{#prev_post}}<a href ="{{url}}>previous post</a>{{/prev_post}}'
 // `{{#next_post}}<a href ="{{url absolute="true">next post</a>{{/next_post}}'
 
+<<<<<<< HEAD:core/frontend/helpers/prev_post.js
 const {logging, i18n, api, hbs, checks} = require('../services/proxy');
 const get = require('lodash/get');
 const Promise = require('bluebird');
 const moment = require('moment');
+=======
+var proxy = require('./proxy'),
+    _ = require('lodash'),
+    Promise = require('bluebird'),
+    moment = require('moment'),
+>>>>>>> parent of 3218606... Add v3.13.0:core/frontend/helpers/prev_next.js
 
-const createFrame = hbs.handlebars.createFrame;
+    logging = proxy.logging,
+    i18n = proxy.i18n,
+    createFrame = proxy.hbs.handlebars.createFrame,
 
+<<<<<<< HEAD:core/frontend/helpers/prev_post.js
 const buildApiOptions = function buildApiOptions(options, post) {
     const publishedAt = moment(post.published_at).format('YYYY-MM-DD HH:mm:ss');
     const slug = post.slug;
@@ -27,13 +37,37 @@ const buildApiOptions = function buildApiOptions(options, post) {
         // or escaped singles, see TryGhost/GQL#34
         filter: "slug:-" + slug + "+published_at:" + op + "'" + publishedAt + "'" // eslint-disable-line quotes
     };
+=======
+    api = proxy.api,
+    isPost = proxy.checks.isPost,
 
-    if (get(options, 'hash.in')) {
-        if (options.hash.in === 'primary_tag' && get(post, 'primary_tag.slug')) {
+    fetch,
+    buildApiOptions;
+
+buildApiOptions = function buildApiOptions(options, post) {
+    var publishedAt = moment(post.published_at).format('YYYY-MM-DD HH:mm:ss'),
+        slug = post.slug,
+        op = options.name === 'prev_post' ? '<=' : '>',
+        order = options.name === 'prev_post' ? 'desc' : 'asc',
+        apiOptions = {
+            /**
+             * @deprecated: `author`, will be removed in Ghost 3.0
+             */
+            include: 'author,authors,tags',
+            order: 'published_at ' + order,
+            limit: 1,
+            // This line deliberately uses double quotes because GQL cannot handle either double quotes
+            // or escaped singles, see TryGhost/GQL#34
+            filter: "slug:-" + slug + "+published_at:" + op + "'" + publishedAt + "'" // eslint-disable-line quotes
+        };
+>>>>>>> parent of 3218606... Add v3.13.0:core/frontend/helpers/prev_next.js
+
+    if (_.get(options, 'hash.in')) {
+        if (options.hash.in === 'primary_tag' && _.get(post, 'primary_tag.slug')) {
             apiOptions.filter += '+primary_tag:' + post.primary_tag.slug;
-        } else if (options.hash.in === 'primary_author' && get(post, 'primary_author.slug')) {
+        } else if (options.hash.in === 'primary_author' && _.get(post, 'primary_author.slug')) {
             apiOptions.filter += '+primary_author:' + post.primary_author.slug;
-        } else if (options.hash.in === 'author' && get(post, 'author.slug')) {
+        } else if (options.hash.in === 'author' && _.get(post, 'author.slug')) {
             apiOptions.filter += '+author:' + post.author.slug;
         }
     }
@@ -41,7 +75,7 @@ const buildApiOptions = function buildApiOptions(options, post) {
     return apiOptions;
 };
 
-const fetch = function fetch(options, data) {
+fetch = function fetch(options, data) {
     const self = this;
     const apiOptions = buildApiOptions(options, this);
     const apiVersion = data.root._locals.apiVersion;
@@ -88,7 +122,7 @@ module.exports = function prevNext(options) {
     }
 
     // Guard against trying to execute prev/next on pages, or other resources
-    if (!checks.isPost(this) || this.page) {
+    if (!isPost(this) || this.page) {
         return Promise.resolve(options.inverse(this, {data: data}));
     }
 

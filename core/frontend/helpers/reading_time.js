@@ -10,7 +10,13 @@
 //
 // Returns estimated reading time for post
 
+<<<<<<< HEAD
 const {SafeString, checks} = require('../services/proxy');
+=======
+const proxy = require('./proxy');
+const schema = require('../../server/data/schema').checks;
+const SafeString = proxy.SafeString;
+>>>>>>> parent of 3218606... Add v3.13.0
 const calculateReadingTime = require('@tryghost/helpers').readingTime;
 
 module.exports = function reading_time(options) {// eslint-disable-line camelcase
@@ -18,7 +24,7 @@ module.exports = function reading_time(options) {// eslint-disable-line camelcas
     options.hash = options.hash || {};
 
     // only calculate reading time for posts
-    if (!checks.isPost(this)) {
+    if (!schema.isPost(this)) {
         return null;
     }
 

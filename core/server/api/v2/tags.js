@@ -143,6 +143,7 @@ module.exports = {
         },
         permissions: true,
         query(frame) {
+<<<<<<< HEAD
             return models.Tag.destroy(frame.options)
                 .then(() => null)
                 .catch(models.Tag.NotFoundError, () => {
@@ -150,6 +151,9 @@ module.exports = {
                         message: i18n.t('errors.api.tags.tagNotFound')
                     }));
                 });
+=======
+            return models.Tag.destroy(frame.options).return(null);
+>>>>>>> parent of 3218606... Add v3.13.0
         }
     }
 };

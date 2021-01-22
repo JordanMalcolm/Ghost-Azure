@@ -9,21 +9,26 @@
 
 const url = require('url');
 const _ = require('lodash');
+<<<<<<< HEAD
 const {urlUtils, logging, i18n} = require('../services/proxy');
 
+=======
+const proxy = require('./proxy');
+const urlUtils = proxy.urlUtils;
+>>>>>>> parent of 3218606... Add v3.13.0
 const STATIC_IMAGE_URL_PREFIX = `${urlUtils.STATIC_IMAGE_URL_PREFIX}`;
 
 module.exports = function imgUrl(requestedImageUrl, options) {
     // CASE: if no url is passed, e.g. `{{img_url}}` we show a warning
     if (arguments.length < 2) {
-        logging.warn(i18n.t('warnings.helpers.img_url.attrIsRequired'));
+        proxy.logging.warn(proxy.i18n.t('warnings.helpers.img_url.attrIsRequired'));
         return;
     }
 
     // CASE: if url is passed, but it is undefined, then the attribute was
     // an unknown value, e.g. {{img_url feature_img}} and we also show a warning
     if (requestedImageUrl === undefined) {
-        logging.warn(i18n.t('warnings.helpers.img_url.attrIsRequired'));
+        proxy.logging.warn(proxy.i18n.t('warnings.helpers.img_url.attrIsRequired'));
         return;
     }
 

@@ -1,12 +1,27 @@
 // # Get Helper
 // Usage: `{{#get "posts" limit="5"}}`, `{{#get "tags" limit="all"}}`
 // Fetches data from the API
+<<<<<<< HEAD
 const {config, logging, errors, i18n, hbs, api} = require('../services/proxy');
 const _ = require('lodash');
 const Promise = require('bluebird');
 const jsonpath = require('jsonpath');
+=======
+var proxy = require('./proxy'),
+    _ = require('lodash'),
+    Promise = require('bluebird'),
+    jsonpath = require('jsonpath'),
+>>>>>>> parent of 3218606... Add v3.13.0
 
-const createFrame = hbs.handlebars.createFrame;
+    config = proxy.config,
+    logging = proxy.logging,
+    errors = proxy.errors,
+    i18n = proxy.i18n,
+    createFrame = proxy.hbs.handlebars.createFrame,
+
+    api = proxy.api,
+    pathAliases,
+    get;
 
 const RESOURCES = {
     posts: {
@@ -24,7 +39,7 @@ const RESOURCES = {
 };
 
 // Short forms of paths which we should understand
-const pathAliases = {
+pathAliases = {
     'post.tags': 'post.tags[*].slug',
     'post.author': 'post.author.slug'
 };
@@ -107,7 +122,7 @@ function parseOptions(globals, data, options) {
  * @param {Object} options
  * @returns {Promise}
  */
-module.exports = function get(resource, options) {
+get = function get(resource, options) {
     options = options || {};
     options.hash = options.hash || {};
     options.data = options.data || {};
@@ -180,3 +195,5 @@ module.exports = function get(resource, options) {
         }
     });
 };
+
+module.exports = get;

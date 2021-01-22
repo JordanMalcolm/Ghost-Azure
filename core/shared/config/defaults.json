@@ -17,11 +17,6 @@
     "paths": {
         "contentPath": "content/"
     },
-    "adapters": {
-        "sso": {
-            "active": "Default"
-        }
-    },
     "storage": {
         "active": "LocalFileStorage"
     },

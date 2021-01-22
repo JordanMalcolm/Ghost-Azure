@@ -18,6 +18,7 @@ const stoppable = require('stoppable');
 /**
  * ## GhostServer
  */
+<<<<<<< HEAD
 class GhostServer {
     /**
      * @constructor
@@ -51,6 +52,33 @@ class GhostServer {
         let socketConfig;
 
         const socketValues = {
+=======
+function GhostServer(rootApp) {
+    this.rootApp = rootApp;
+    this.httpServer = null;
+    this.connections = {};
+    this.connectionId = 0;
+
+    // Expose config module for use externally.
+    this.config = config;
+}
+
+/**
+ * ## Public API methods
+ *
+ * ### Start
+ * Starts the ghost server listening on the configured port.
+ * Alternatively you can pass in your own express instance and let Ghost
+ * start listening for you.
+ * @param  {Object} externalApp - Optional express app instance.
+ * @return {Promise} Resolves once Ghost has started
+ */
+GhostServer.prototype.start = function (externalApp) {
+    debug('Starting...');
+    var self = this,
+        rootApp = externalApp ? externalApp : self.rootApp,
+        socketConfig, socketValues = {
+>>>>>>> parent of 3218606... Add v3.13.0
             path: path.join(config.get('paths').contentPath, config.get('env') + '.socket'),
             permissions: '660'
         };
@@ -298,10 +326,18 @@ const debugInfo = {
     release: process.release
 };
 
+<<<<<<< HEAD
 module.exports.announceServerReadiness = function (error = null) {
     // If we already announced readiness, we should not do it again
     if (announceServerReadinessCalled) {
         return Promise.resolve();
+=======
+    // CASE: IPC communication to the CLI via child process.
+    if (process.send) {
+        process.send({
+            started: true
+        });
+>>>>>>> parent of 3218606... Add v3.13.0
     }
 
     // Mark this function as called
@@ -324,6 +360,7 @@ module.exports.announceServerReadiness = function (error = null) {
 
     // CASE: IPC communication to the CLI for local process manager
     if (process.send) {
+<<<<<<< HEAD
         process.send(message);
     }
 
@@ -331,6 +368,20 @@ module.exports.announceServerReadiness = function (error = null) {
     let socketAddress = config.get('bootstrap-socket');
     if (socketAddress) {
         return bootstrapSocket.connectAndSend(socketAddress, logging, message);
+=======
+        process.send({
+            started: false,
+            error: error
+        });
+    }
+
+    // CASE: Ghost extension - bootstrap sockets
+    if (config.get('bootstrap-socket')) {
+        return connectToBootstrapSocket({
+            started: false,
+            error: error
+        });
+>>>>>>> parent of 3218606... Add v3.13.0
     }
 
     return Promise.resolve();

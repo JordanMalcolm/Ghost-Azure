@@ -145,6 +145,7 @@ module.exports = {
         },
         query(frame) {
             frame.options.require = true;
+<<<<<<< HEAD
 
             return models.Webhook.destroy(frame.options)
                 .then(() => null)
@@ -155,6 +156,9 @@ module.exports = {
                         })
                     }));
                 });
+=======
+            return models.Webhook.destroy(frame.options).return(null);
+>>>>>>> parent of 3218606... Add v3.13.0
         }
     }
 };
